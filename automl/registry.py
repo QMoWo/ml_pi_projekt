@@ -2,7 +2,7 @@
 
 from collections.abc import Callable
 
-from .detectors import IsolationForestDetector, LocalOutlierFactorDetector
+from .detectors import IsolationForestDetector, LocalOutlierFactorDetector, OneClassSVMDetector
 
 
 class DetectorRegistry:
@@ -32,9 +32,23 @@ def build_default_registry() -> DetectorRegistry:
     registry.register("isolation_forest", IsolationForestDetector)
     registry.register(
         "local_outlier_factor",
-        lambda contamination=0.05, random_state=None: LocalOutlierFactorDetector(
+        lambda contamination=0.05, n_neighbors=20, leaf_size=30, metric="minkowski", algorithm="auto": LocalOutlierFactorDetector(
             contamination=contamination,
-            n_neighbors=20,
+            n_neighbors=n_neighbors,
+            leaf_size=leaf_size,
+            metric=metric,
+            algorithm=algorithm,
+        ),
+    )
+    registry.register(
+        "one_class_svm",
+        lambda contamination=0.05, nu=0.05, kernel="rbf", gamma="scale", degree=3, coef0=0.0: OneClassSVMDetector(
+            contamination=contamination,
+            nu=nu,
+            kernel=kernel,
+            gamma=gamma,
+            degree=degree,
+            coef0=coef0,
         ),
     )
     return registry

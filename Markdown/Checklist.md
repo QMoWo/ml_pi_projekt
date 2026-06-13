@@ -23,6 +23,8 @@
 
 - [x] Isolation Forest als erste Baseline implementiert
 - [x] Local Outlier Factor als zweites Vergleichsmodell implementiert
+- [x] One-Class SVM als dritte Baseline implementiert
+- [x] Random Search als erste Parametersuche angebunden
 - [x] TEP-Daten werden als vier Splits geladen: Training / Testing, fault-free / faulty
 - [x] Feasible unsupervised training auf `train_fault_free`
 - [x] Evaluation auf kombiniertem Testsplit mit Labels
@@ -31,12 +33,14 @@
 - [x] Registry-basierte Modellauswahl
 - [x] Default-Workflow bleibt schnell und nutzt nur einen Detektor
 - [x] Vergleichsworkflow kann mehrere Detektoren gezielt ausführen
+- [x] Ein kleines CLI für wiederholbare Runs gebaut
 
 ## Noch nicht implementiert
 
 - [ ] PyOD als Referenz ganz am Ende integrieren
 - [ ] Einen dritten Detektor ergänzen
-- [ ] Suchstrategien parametrisieren statt nur Detektoren zu wechseln
+- [ ] Successive Halving als Budget-Strategie implementieren
+- [ ] Vollsuchmodus für alle Detektoren mit Strategie implementieren
 - [ ] SMAC als Suchstrategie implementieren
 - [ ] Irace als Suchstrategie implementieren
 - [ ] Meta-Learning als Initialisierung einsetzen
@@ -44,12 +48,15 @@
 - [ ] Streaming / Online-Detection vorbereiten
 - [ ] Ergebnisse systematisch speichern
 - [ ] Ein kleines CLI oder Skript für wiederholbare Runs bauen
+- [ ] EllipticEnvelope als leichtere weitere Baseline prüfen
+- [ ] Autoencoder als neuronale Baseline prüfen
 
 ## Forschungsstand, noch offen in der Implementierung
 
 - [x] ParamILS als mögliche Suchstrategie bekannt
 - [x] SMAC als mögliche Suchstrategie bekannt
 - [x] GGA als möglicher Suchansatz bekannt
+- [x] Successive Halving als Budget-Strategie bekannt
 - [x] Irace als mögliche Suchstrategie bekannt
 - [x] Meta-Learning als möglicher Ansatz bekannt
 - [x] AnoGAN als mögliche neuronale Methode bekannt
@@ -60,7 +67,5 @@
 
 ## Nächste Arbeitspakete
 
-- [ ] One-Class SVM als weitere Baseline prüfen
-- [ ] Autoencoder als neuronale Baseline prüfen
 - [ ] AnoGAN als späteres Deep-Learning-Modell prüfen
 - [ ] Vergleichstabelle für Methoden und Frameworks erstellen

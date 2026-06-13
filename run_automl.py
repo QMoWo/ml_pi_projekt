@@ -5,7 +5,8 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from automl.pipeline import run_comparison_workflow, run_minimal_workflow
+from automl.pipeline import run_comparison_workflow, run_minimal_workflow, run_search_workflow
+from automl.registry import build_default_registry
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -16,9 +17,21 @@ def build_parser() -> argparse.ArgumentParser:
         help="Path to the folder containing the TEP parquet files.",
     )
     parser.add_argument(
+        "--detector",
+        default="isolation_forest",
+        choices=build_default_registry().names(),
+        help="Detector to run in minimal mode.",
+    )
+    parser.add_argument(
         "--compare",
         nargs="*",
         help="Compare detectors. If no names are given, all registered detectors are used.",
+    )
+    parser.add_argument(
+        "--strategy",
+        choices=["minimal", "compare", "search", "random_search"],
+        default="minimal",
+        help="Choose the execution strategy.",
     )
     return parser
 
@@ -29,11 +42,14 @@ def main() -> None:
 
     data_dir = Path(args.data_dir)
 
-    if args.compare is not None:
+    if args.strategy in {"search", "random_search"}:
+        detector_names = args.compare or None
+        result = run_search_workflow(data_dir, detector_names)
+    elif args.compare is not None or args.strategy == "compare":
         detector_names = args.compare or None
         result = run_comparison_workflow(data_dir, detector_names)
     else:
-        result = run_minimal_workflow(data_dir)
+        result = run_minimal_workflow(data_dir, detector_name=args.detector)
 
     print(result)
 

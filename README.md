@@ -108,6 +108,18 @@ Am einfachsten startest du ihn jetzt so:
 python run_automl.py
 ```
 
+Mit einem anderen Detektor:
+
+```powershell
+python run_automl.py --detector local_outlier_factor
+```
+
+Mit Random Search:
+
+```powershell
+python run_automl.py --strategy search
+```
+
 Beispiel:
 
 ```python
@@ -120,23 +132,30 @@ print(result)
 Im aktuellen Stand werden zwei austauschbare Detektoren verglichen:
 - `isolation_forest`
 - `local_outlier_factor`
+- `one_class_svm`
 
 Wenn du gezielt vergleichen willst:
 
 ```powershell
-python run_automl.py --compare isolation_forest local_outlier_factor
+python run_automl.py --compare isolation_forest local_outlier_factor one_class_svm
+```
+
+Random Search über ausgewählte Detektoren:
+
+```powershell
+python run_automl.py --strategy search --compare isolation_forest local_outlier_factor one_class_svm
 ```
 
 Die Registry in `automl/registry.py` erzeugt diese Modelle. Der Minimal-Workflow nutzt standardmäßig `isolation_forest`, damit der Start schnell bleibt. Wenn du `--compare` ohne weitere Namen aufrufst, werden automatisch alle registrierten Detektoren verglichen. Wenn du nur eine Teilmenge willst, kannst du die Namen direkt angeben.
 
-Beispiel für einen Vergleich:
+Beispiel für einen Vergleich in Python:
 
 ```python
 from automl.pipeline import run_comparison_workflow
 
 result = run_comparison_workflow(
 	"automl/data",
-	["isolation_forest", "local_outlier_factor"],
+	["isolation_forest", "local_outlier_factor", "one_class_svm"],
 )
 print(result)
 ```
@@ -145,6 +164,12 @@ Beispiel für alle Detektoren im Terminal:
 
 ```powershell
 python run_automl.py --compare
+```
+
+Beispiel für einen einzelnen Detektor im Terminal:
+
+```powershell
+python run_automl.py --detector local_outlier_factor
 ```
 
 ## Spätere Erweiterungen

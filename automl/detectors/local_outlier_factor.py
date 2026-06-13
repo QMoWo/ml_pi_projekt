@@ -8,10 +8,21 @@ from .base import BaseDetector
 class LocalOutlierFactorDetector(BaseDetector):
     """Wrapper around sklearn's LocalOutlierFactor in novelty mode."""
 
-    def __init__(self, *, contamination: float = 0.05, n_neighbors: int = 20) -> None:
+    def __init__(
+        self,
+        *,
+        contamination: float = 0.05,
+        n_neighbors: int = 20,
+        leaf_size: int = 30,
+        metric: str = "minkowski",
+        algorithm: str = "auto",
+    ) -> None:
         self.estimator = LocalOutlierFactor(
             contamination=contamination,
             n_neighbors=n_neighbors,
+            leaf_size=leaf_size,
+            metric=metric,
+            algorithm=algorithm,
             novelty=True,
         )
 
